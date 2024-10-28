@@ -1,26 +1,21 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div>
+      <router-view v-if="!isAuthenticated" /> <!-- Muestra solo el login -->
+      <AppLayout v-else /> <!-- Muestra el layout en las vistas autenticadas -->
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import AppLayout from "./components/AppLayout.vue";
 
 export default {
-  name: 'App',
   components: {
-    HelloWorld
+      AppLayout
+  },
+  computed: {
+      isAuthenticated() {
+          return !!localStorage.getItem('authToken');
+      }
   }
-}
+};
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
