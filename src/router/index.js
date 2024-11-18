@@ -3,6 +3,9 @@ import LoginView from '../views/LoginView.vue';
 import EstudiantesView from '../views/EstudiantesView.vue';
 import AgregarEstudiante from '../views/AgregarEstudiante.vue';
 import EditarEstudiante from '../views/EditarEstudiante.vue';
+import CuposView from '@/views/CuposView.vue';
+import RecomendacionView from '@/views/RecomendacionView.vue';
+import DetalleRecomendacionView from '@/views/DetalleRecomendacionView.vue';
 
 const routes = [
     { path: '/login', name: 'Login', component: LoginView },
@@ -22,6 +25,25 @@ const routes = [
         path: '/estudiantes/editar/:id',
         name: 'EditarEstudiante',
         component: EditarEstudiante,
+        meta: { requiresAuth: true },
+        props: true
+    },
+    {
+        path: '/cupos',
+        name: 'Cupos',
+        component: CuposView,
+        meta: { requiresAuth: true } // Protege la ruta de Cupos
+    },
+    {
+        path: '/reporte',
+        name: 'Reporte',
+        component: RecomendacionView,
+        meta: { requiresAuth: true }
+    },
+    {
+        path: '/reporte/:id/detalles',
+        name: 'DetalleReporte',
+        component: DetalleRecomendacionView,
         meta: { requiresAuth: true },
         props: true
     },
