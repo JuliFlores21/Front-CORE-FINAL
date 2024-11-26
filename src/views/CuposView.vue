@@ -7,6 +7,7 @@
                     <th>ID</th>
                     <th>Nombre de la Actividad</th>
                     <th>Requerimientos Físicos</th>
+                    <th>Horario</th>
                     <th>Disponibilidad</th>
                     <th>Acciones</th>
                 </tr>
@@ -16,6 +17,7 @@
                     <td>{{ actividad.idActividad }}</td>
                     <td>{{ actividad.nombreActividad }}</td>
                     <td>{{ actividad.requerimientosFisicos || 'N/A' }}</td>
+                    <td>{{ actividad.horario }}</td>
                     <td>{{ actividad.disponibilidad ? 'Disponible' : 'No Disponible' }}</td>
                     <td>
                         <button @click="cambiarEstado(actividad)" class="action-button change">

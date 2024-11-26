@@ -11,6 +11,9 @@
             <label>Cédula:</label>
             <input v-model="estudiante.cedula" required />
 
+            <label >Horario:</label>
+            <input  v-model="estudiante.horario" required>
+
             <label>Nivel Condición Física:</label>
             <input v-model="estudiante.nivelCondicionFisica" required />
 
@@ -24,49 +27,54 @@
             <input v-model="estudiante.restriccionesFisicas" />
 
             <button type="submit">Agregar</button>
-            <p v-if="mensaje" :class="{'error': mensajeError, 'mensaje': !mensajeError}">{{ mensaje }}</p>
+            <button type="button" class="regresar-button" @click="regresar">Regresar</button>
+            <p v-if="mensaje" :class="{ error: mensajeError, mensaje: !mensajeError }">{{ mensaje }}</p>
         </form>
     </div>
 </template>
 
 <script>
-import apiClient from '../axios';
+import apiClient from "../axios";
 
 export default {
     data() {
         return {
             estudiante: {
-                nombre: '',
-                correo: '',
-                cedula: '',
-                nivelCondicionFisica: '',
-                preferenciasDeporte: '',
-                objetivosPersonales: '',
-                restriccionesFisicas: '',
-                idAdministrador: 1 // Siempre asigna 1 para el administrador
+                nombre: "",
+                correo: "",
+                cedula: "",
+                nivelCondicionFisica: "",
+                preferenciasDeporte: "",
+                objetivosPersonales: "",
+                restriccionesFisicas: "",
+                idAdministrador: 1, // Siempre asigna 1 para el administrador
+                horario: "",
             },
-            mensaje: '',
-            mensajeError: false
+            mensaje: "",
+            mensajeError: false,
         };
     },
     methods: {
         async agregarEstudiante() {
             try {
-                await apiClient.post('/Estudiante', this.estudiante);
-                this.mensaje = 'Estudiante agregado correctamente';
+                await apiClient.post("/Estudiante", this.estudiante);
+                this.mensaje = "Estudiante agregado correctamente";
                 this.mensajeError = false;
-                this.$router.push({ name: 'Estudiantes' });
+                this.$router.push({ name: "Estudiantes" });
             } catch (error) {
                 if (error.response && error.response.data) {
-                    // Muestra el mensaje de error del backend
-                    this.mensaje = error.response.data.message || 'Hubo un error al agregar el estudiante.';
+                    this.mensaje =
+                        error.response.data.message || "Hubo un error al agregar el estudiante.";
                 } else {
-                    this.mensaje = 'Hubo un error de conexión al intentar agregar el estudiante.';
+                    this.mensaje = "Hubo un error de conexión al intentar agregar el estudiante.";
                 }
                 this.mensajeError = true;
             }
-        }
-    }
+        },
+        regresar() {
+            this.$router.push({ name: "Estudiantes" });
+        },
+    },
 };
 </script>
 
@@ -109,7 +117,20 @@ export default {
 .form-container button:hover {
     background-color: #2980b9;
 }
-
+.regresar-button {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    width: 100%;
+}
+.regresar-button:hover {
+    background-color: #c0392b;
+}
 .error {
     color: red;
     font-size: 0.9em;

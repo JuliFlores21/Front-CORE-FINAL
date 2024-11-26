@@ -8,6 +8,7 @@
                     <th>ID</th>
                     <th>Nombre</th>
                     <th>Nivel Condición Física</th>
+                    <th>Horario</th>
                     <th>Preferencia</th>
                     <th>Acciones</th>
                 </tr>
@@ -17,6 +18,7 @@
                     <td>{{ estudiante.id }}</td>
                     <td>{{ estudiante.nombre }}</td>
                     <td>{{ estudiante.nivelCondicionFisica }}</td>
+                    <td>{{ estudiante.horario }}</td>
                     <td>{{ estudiante.preferenciasDeporte }}</td>
                     <td>
                         <button @click="irAEditar(estudiante.id)" class="action-button edit">Editar</button>

@@ -11,6 +11,9 @@
             <label>Cédula:</label>
             <input v-model="estudiante.cedula" required />
 
+            <label >Horario:</label>
+            <input v-model="estudiante.horario" required>
+
             <label>Nivel Condición Física:</label>
             <input v-model="estudiante.nivelCondicionFisica" required />
 
@@ -24,27 +27,31 @@
             <input v-model="estudiante.restriccionesFisicas" />
 
             <button type="submit">Guardar Cambios</button>
-            <p v-if="mensaje" :class="{'error': mensajeError, 'mensaje': !mensajeError}">{{ mensaje }}</p>
+            <button type="button" class="regresar-button" @click="regresar">Regresar</button>
+            <p v-if="mensaje" :class="{ error: mensajeError, mensaje: !mensajeError }">{{ mensaje }}</p>
         </form>
     </div>
 </template>
 
 <script>
-import apiClient from '../axios';
+import apiClient from "../axios";
 
 export default {
-    props: ['id'],
+    props: ["id"],
     data() {
         return {
             estudiante: {
-                nombre: '',
-                correo: '',
-                cedula: '',
-                nivelCondicionFisica: '',
-                preferenciasDeporte: '',
-                objetivosPersonales: '',
-                restriccionesFisicas: ''
-            }
+                nombre: "",
+                correo: "",
+                cedula: "",
+                nivelCondicionFisica: "",
+                preferenciasDeporte: "",
+                objetivosPersonales: "",
+                restriccionesFisicas: "",
+                horario:"",
+            },
+            mensaje: "",
+            mensajeError: false,
         };
     },
     async created() {
@@ -59,24 +66,27 @@ export default {
         async editarEstudiante() {
             try {
                 await apiClient.put(`/Estudiante/${this.id}`, this.estudiante);
-                this.mensaje = 'Estudiante editado correctamente';
+                this.mensaje = "Estudiante editado correctamente";
                 this.mensajeError = false;
-                this.$router.push({ name: 'Estudiantes' });
+                this.$router.push({ name: "Estudiantes" });
             } catch (error) {
                 if (error.response && error.response.data) {
-                    this.mensaje = error.response.data.message || 'Hubo un error al editar el estudiante.';
+                    this.mensaje =
+                        error.response.data.message || "Hubo un error al editar el estudiante.";
                 } else {
-                    this.mensaje = 'Hubo un error de conexión al intentar editar el estudiante.';
+                    this.mensaje = "Hubo un error de conexión al intentar editar el estudiante.";
                 }
                 this.mensajeError = true;
             }
-        }
-    }
+        },
+        regresar() {
+            this.$router.push({ name: "Estudiantes" });
+        },
+    },
 };
 </script>
 
 <style scoped>
-/* Mismos estilos que en AgregarEstudiante.vue */
 .form-container {
     max-width: 600px;
     margin: 0 auto;
@@ -114,6 +124,20 @@ export default {
 }
 .form-container button:hover {
     background-color: #2980b9;
+}
+.regresar-button {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    width: 100%;
+}
+.regresar-button:hover {
+    background-color: #c0392b;
 }
 .error {
     color: red;

@@ -6,6 +6,7 @@ import EditarEstudiante from '../views/EditarEstudiante.vue';
 import CuposView from '@/views/CuposView.vue';
 import RecomendacionView from '@/views/RecomendacionView.vue';
 import DetalleRecomendacionView from '@/views/DetalleRecomendacionView.vue';
+import AgregarReporteView from '@/views/AgregarReporteView.vue';
 
 const routes = [
     { path: '/login', name: 'Login', component: LoginView },
@@ -38,7 +39,7 @@ const routes = [
         path: '/reporte',
         name: 'Reporte',
         component: RecomendacionView,
-        meta: { requiresAuth: true }
+        meta: { requiresAuth: true }    
     },
     {
         path: '/reporte/:id/detalles',
@@ -46,6 +47,12 @@ const routes = [
         component: DetalleRecomendacionView,
         meta: { requiresAuth: true },
         props: true
+    },
+    {
+        path: '/reporte/agregar',
+        name: 'AgregarReporte',
+        component: AgregarReporteView,
+        meta: {requiresAuth: true}
     },
     { path: '/', redirect: '/login' } // Redirección a login si accede a la raíz
 ];
