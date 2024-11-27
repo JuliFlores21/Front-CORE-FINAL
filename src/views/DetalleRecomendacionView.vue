@@ -41,11 +41,32 @@
     </div>
 
     <!-- Detalle de la recomendación general -->
-    <div v-if="detalleGeneral" class="info-box">
-      <h3>Mejor Actividad sin Coincidencia de Horario</h3>
-      <p><strong>Actividad:</strong> {{ detalleGeneral.nombreActividad }}</p>
-      <p><strong>Peso Asignado Total:</strong> {{ detalleGeneral.pesoAsignado }}%</p>
+    <!-- Detalle de la recomendación general -->
+  <div v-if="detalleGeneral" class="info-box general-recommendation">
+    <h3>Mejor Actividad sin Coincidencia de Horario</h3>
+    <p><strong>Actividad:</strong> {{ detalleGeneral.nombreActividad }}</p>
+    <p><strong>Peso Asignado Total:</strong> {{ detalleGeneral.pesoAsignado }}%</p>
+
+    <!-- Detalles de los parámetros asignados -->
+    <div v-if="detallesGeneral && detallesGeneral.length > 0" class="progress-box">
+      <h3>Detalle de Peso Asignado por Parámetro (Actividad General)</h3>
+      <div class="progress-bar">
+        <div
+          v-for="(detalle, index) in detallesGeneral"
+          :key="index"
+          :style="{ backgroundColor: colores[index], width: detalle.porcentaje + '%' }"
+        >
+          {{ detalle.porcentaje }}%
+        </div>
+      </div>
+      <ul class="legend">
+        <li v-for="(detalle, index) in detallesGeneral" :key="index">
+          <span :style="{ backgroundColor: colores[index] }"></span>
+          {{ detalle.parametro }}: {{ detalle.porcentaje }}%
+        </li>
+      </ul>
     </div>
+  </div>
 
     <button class="back-button" @click="volver">Regresar</button>
   </div>
@@ -73,7 +94,7 @@ export default {
     const response = await apiClient.get(`/Recomendacion/${id}`);
     const recomendaciones = response.data; // Es un array
     this.detalleRecomendacion = recomendaciones[0];
-    this.detalleGeneral = recomendaciones.find[1];
+    this.detalleGeneral = recomendaciones[1];
 
     const detallesResponse = await apiClient.get(`/Recomendacion/${id}/detalles`);
     const data = detallesResponse.data;
@@ -127,7 +148,8 @@ export default {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 .info-box.general {
-  margin-top: 20px;
+  margin-top: 40px;
+  width: 100%; /* Ajustar ancho al cuadro superior */
 }
 .progress-box {
   background-color: #ecf0f1;
@@ -175,6 +197,14 @@ export default {
   margin-right: 10px;
   border-radius: 4px;
 }
+.general-recommendation {
+  background-color: #ecf0f1;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 40px auto;
+  max-width: 800px; /* Ancho máximo ajustado */
+}
 .back-button {
   margin-top: 20px;
   padding: 10px;
@@ -190,3 +220,5 @@ export default {
   background-color: #c0392b;
 }
 </style>
+
+
